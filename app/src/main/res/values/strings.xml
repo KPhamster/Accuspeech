@@ -4,5 +4,8 @@
     <string name="app_name">Team Accuspeech</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="notification_title">Currently recording</string>
+    <string name="notification_message">Tap here for record controls.</string>
+    <string name="ticker_text">Recording has started</string>
 
 </resources>

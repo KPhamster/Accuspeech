@@ -5,7 +5,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import edu.uci.accuspeech.fragment.GainControlFragment;
+import edu.uci.accuspeech.fragment.RecordControlFragment;
 
+/**
+ * Generated class when creating the project from scratch.
+ */
 public class MainActivity extends ActionBarActivity {
 
     @Override
@@ -14,7 +19,10 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new MainFragment())
+                    .add(R.id.container, new GainControlFragment())
+                    .commit();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, new RecordControlFragment())
                     .commit();
         }
     }

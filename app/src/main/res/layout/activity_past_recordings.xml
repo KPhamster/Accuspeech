@@ -1,0 +1,68 @@
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView android:text="@string/past_recordings"
+        android:id="@+id/activityTitle"
+        style="@style/ActivityTitle" />
+    <LinearLayout android:id="@+id/buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="5dp">
+        <Button
+            android:text="@string/audio_settings"
+            android:onClick="audioSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <Button
+            android:text="@string/new_recording"
+            android:onClick="newRecording"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <View
+        android:id="@+id/linebreak"
+        android:layout_above="@id/buttons"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="#000000"
+        />
+    <ScrollView
+        android:layout_below="@id/activityTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/linebreak">
+        <LinearLayout android:id="@+id/audioControls"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            <ImageButton
+                android:id="@+id/stopButton"
+                android:onClick="onStopPlaying"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/stop"
+                android:layout_weight="1"/>
+            <ImageButton
+                android:id="@+id/playButton"
+                android:onClick="onPlay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/play"
+                android:layout_weight="1"/>
+            <ImageButton
+                android:id="@+id/pauseButton"
+                android:onClick="onPausePlaying"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/pause"
+                android:layout_weight="1"/>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

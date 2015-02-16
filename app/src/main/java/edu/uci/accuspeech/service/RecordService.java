@@ -3,17 +3,19 @@ package edu.uci.accuspeech.service;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioRecord;
 import android.media.AudioTrack;
 import android.media.MediaRecorder;
+import android.media.audiofx.AudioEffect;
 import android.media.audiofx.AutomaticGainControl;
 import android.os.Binder;
 import android.os.Environment;
 import android.os.IBinder;
-import android.widget.Toast;
 
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
@@ -22,6 +24,7 @@ import java.io.OutputStream;
 
 import edu.uci.accuspeech.MainActivity;
 import edu.uci.accuspeech.R;
+import edu.uci.accuspeech.util.AudioEffectUtil;
 import edu.uci.accuspeech.util.ConvertRawToWav;
 
 /**
@@ -53,6 +56,11 @@ public class RecordService extends Service {
 
     private final IBinder mBinder = new LocalBinder();
 
+    private SharedPreferences sharedPreferences;
+
+    public RecordService() {
+    }
+
     @Override
     public IBinder onBind(Intent intent) {
         return mBinder;
@@ -81,12 +89,10 @@ public class RecordService extends Service {
     /**
      * Method to begin recording. This will create new objects needed for recording and
      * start a background thread to write a raw file from the audio buffer.
-     * @param autoGainControl
-     *  True if autoGainControl is supposed to be on
      * @throws IOException
      *  Throws this exception if there are problems with file IO
      */
-    public void startRecording(boolean autoGainControl) throws IOException {
+    public void startRecording() throws IOException {
         // If we are already recording this should return and do nothing
         if (isRecording) {
             return;
@@ -98,14 +104,17 @@ public class RecordService extends Service {
         recorder = new AudioRecord(MediaRecorder.AudioSource.VOICE_RECOGNITION, iSampleRate, AudioFormat.CHANNEL_IN_MONO,
                 AudioFormat.ENCODING_PCM_16BIT, iAudioBufferSize);
 
-        AutomaticGainControl gainControl = AutomaticGainControl.create(recorder.getAudioSessionId());
-        gainControl.setEnabled(autoGainControl);
+        // Check if AGC is supported, if so retrieve from shared prefs
+        if (AudioEffectUtil.isSupported(AudioEffect.EFFECT_TYPE_AGC)) {
+            AutomaticGainControl gainControl = AutomaticGainControl.create(recorder.getAudioSessionId());
+            if (sharedPreferences == null) {
+                sharedPreferences = getSharedPreferences(AudioEffectUtil.SETTINGS_PREFS, Context.MODE_PRIVATE);
+            }
+            gainControl.setEnabled(sharedPreferences.getBoolean(AudioEffectUtil.AUTO_GAIN_CONTROL_KEY, false));
+        }
 
         recordThread = new RecordThread(bos, recorder);
         recordThread.start();
-
-        // TODO remove this debug toast
-        Toast.makeText(this, "AGC: " + gainControl.getEnabled(), Toast.LENGTH_SHORT).show();
 
         // Create a notification for this service while we are recording
         // Basically this is copy-paste from Android docs on foreground service

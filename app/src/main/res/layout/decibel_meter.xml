@@ -1,0 +1,12 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Box">
+
+    <TextView
+        style="@style/BoxTitle"
+        android:text="@string/decibel_meter_title"/>
+
+    <TextView
+        style="@style/BoxFooter"
+        android:text="@string/decibel_meter_box_desc"/>
+</LinearLayout>

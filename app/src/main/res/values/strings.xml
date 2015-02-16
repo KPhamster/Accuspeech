@@ -7,5 +7,19 @@
     <string name="notification_title">Currently recording</string>
     <string name="notification_message">Tap here for record controls.</string>
     <string name="ticker_text">Recording has started</string>
-
+    <string name="agc_box_title">Automatic Gain Control</string>
+    <string name="agc_box_desc">This is what AGC does</string>
+    <string name="audio_settings">Audio Settings</string>
+    <string name="equalizer_title">Equalizer</string>
+    <string name="equalizer_box_desc">This is what Equalizer does</string>
+    <string name="new_recording">New Recording</string>
+    <string name="past_recordings">Past Recordings</string>
+    <string name="start_recording">Start Recording</string>
+    <string name="stop_recording">Stop Recording</string>
+    <string name="zero_time">0:00</string>
+    <string name="bass_boost_title">Bass Boost</string>
+    <string name="bass_boost_box_desc">This is what bass boost does.</string>
+    <string name="decibel_meter_title">Decibel Meter</string>
+    <string name="decibel_meter_box_desc">This is what a decibel meter does.</string>
+    <string name="feature_not_supported">Not supported on this device.</string>
 </resources>

@@ -1,0 +1,42 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Box">
+
+
+    <TextView
+        style="@style/BoxTitle"
+        android:text="@string/agc_box_title"/>
+    <TextView
+        style="@style/BoxFeatureNotSupported"
+        android:id="@+id/not_supported" />
+    <RadioGroup
+        android:id="@+id/radioButtons"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="On"
+            android:id="@+id/gainControlOn"
+            android:layout_gravity="center_horizontal"
+            android:checked="true" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:text="Off"
+            android:id="@+id/gainControlOff"
+            android:layout_gravity="right" />
+
+    </RadioGroup>
+
+    <TextView
+        style="@style/BoxFooter"
+        android:text="@string/agc_box_desc"/>
+</LinearLayout>

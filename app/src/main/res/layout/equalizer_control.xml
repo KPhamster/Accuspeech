@@ -1,0 +1,22 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Box">
+
+
+    <TextView
+        style="@style/BoxTitle"
+        android:text="@string/equalizer_title"/>
+    <TextView
+        style="@style/BoxFeatureNotSupported"
+        android:id="@+id/not_supported" />
+    <LinearLayout
+        android:id="@+id/control"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    </LinearLayout>
+    <TextView
+        style="@style/BoxFooter"
+        android:paddingTop="0dp"
+        android:text="@string/equalizer_box_desc"/>
+</LinearLayout>

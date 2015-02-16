@@ -1,17 +1,16 @@
 package edu.uci.accuspeech;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
+import edu.uci.accuspeech.fragment.BassBoostControlFragment;
+import edu.uci.accuspeech.fragment.DecibelMeterFragment;
+import edu.uci.accuspeech.fragment.EqualizerControlFragment;
 import edu.uci.accuspeech.fragment.GainControlFragment;
-import edu.uci.accuspeech.fragment.RecordControlFragment;
 
 /**
  * Generated class when creating the project from scratch.
  */
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends NavigationActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,31 +21,14 @@ public class MainActivity extends ActionBarActivity {
                     .add(R.id.container, new GainControlFragment())
                     .commit();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new RecordControlFragment())
+                    .add(R.id.container, new EqualizerControlFragment())
+                    .commit();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, new BassBoostControlFragment())
+                    .commit();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, new DecibelMeterFragment())
                     .commit();
         }
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

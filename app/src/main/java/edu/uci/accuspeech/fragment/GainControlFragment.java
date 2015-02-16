@@ -37,11 +37,9 @@ public class GainControlFragment extends Fragment {
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
                     switch (checkedId) {
                         case R.id.gainControlOn:
-                            Log.d("GainControlFragment", "Gain Control On");
                             sharedPreferences.edit().putBoolean(AudioEffectUtil.AUTO_GAIN_CONTROL_KEY, true).commit();
                             break;
                         case R.id.gainControlOff:
-                            Log.d("GainControlFragment", "Gain Control Off");
                             sharedPreferences.edit().putBoolean(AudioEffectUtil.AUTO_GAIN_CONTROL_KEY, false).commit();
                             break;
                     }

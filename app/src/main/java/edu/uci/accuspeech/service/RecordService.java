@@ -14,10 +14,10 @@ import android.media.MediaRecorder;
 import android.media.audiofx.AudioEffect;
 import android.media.audiofx.AutomaticGainControl;
 import android.os.Binder;
-import android.os.Environment;
 import android.os.IBinder;
 
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -33,13 +33,8 @@ import edu.uci.accuspeech.util.ConvertRawToWav;
  * The reason for this class to be a service is so it can run outside the
  * lifecycle of an activity or fragment.
  */
-public class RecordService extends Service {
+public class RecordService extends AudioService {
 
-    // Notification id for when sound is being recorded
-    private static final int ONGOING_NOTIFICATION_ID = 34637;
-
-    // path to file where the raw sound data is stored
-    private static final String RAW_FILE_NAME = Environment.getExternalStorageDirectory().getAbsolutePath() + "/raw_file";
 
     private AudioRecord recorder;
 
@@ -100,7 +95,8 @@ public class RecordService extends Service {
         isRecording = true;
         final int iSampleRate = AudioTrack.getNativeOutputSampleRate(AudioManager.STREAM_SYSTEM);
         iAudioBufferSize = AudioRecord.getMinBufferSize(iSampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
-        bos = new BufferedOutputStream(new FileOutputStream(RAW_FILE_NAME));
+        File rawFile = new File(RAW_FILE_PATH, RAW_FILE_NAME);
+        bos = new BufferedOutputStream(new FileOutputStream(rawFile));
         recorder = new AudioRecord(MediaRecorder.AudioSource.VOICE_RECOGNITION, iSampleRate, AudioFormat.CHANNEL_IN_MONO,
                 AudioFormat.ENCODING_PCM_16BIT, iAudioBufferSize);
 
@@ -144,15 +140,15 @@ public class RecordService extends Service {
         recorder.stop();
         recorder.release();
         bos.close();
-        final String waveFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/audiorecordtest.wav";
 
         // TODO This should be done in a background thread, currently it is being run on main thread
         // TODO This could lead to UI lag
-        ConvertRawToWav.properWAV(RAW_FILE_NAME, waveFileName, AudioTrack.getNativeOutputSampleRate(AudioManager.STREAM_SYSTEM));
+        ConvertRawToWav.properWAV(RAW_FILE_PATH + RAW_FILE_NAME, DEFAULT_WAV_FILENAME, AudioTrack.getNativeOutputSampleRate(AudioManager.STREAM_SYSTEM));
         bos = null;
         recorder = null;
         recordThread = null;
     }
+
 
     /**
      * This is the class that will read from the audio buffer and output that data

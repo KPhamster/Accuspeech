@@ -1,15 +1,21 @@
 package edu.uci.accuspeech.service;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+import android.media.audiofx.AudioEffect;
+import android.media.audiofx.BassBoost;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
+
+import edu.uci.accuspeech.util.AudioEffectUtil;
 
 public class PlayService extends AudioService {
 
@@ -93,8 +99,26 @@ public class PlayService extends AudioService {
             return;
         }
         if (!mPlayer.isPlaying()) {
+            setupAudioSettings(mPlayer.getAudioSessionId());
             isPaused = false;
             mPlayer.start();
+        }
+    }
+
+    private void setupAudioSettings(int sessionId) {
+        if (AudioEffectUtil.isSupported(AudioEffect.EFFECT_TYPE_BASS_BOOST)) {
+            BassBoost bass = new BassBoost(0, sessionId);
+            if(bass.getStrengthSupported()) {
+                if (sharedPreferences == null) {
+                    sharedPreferences = getSharedPreferences(AudioEffectUtil.SETTINGS_PREFS, Context.MODE_PRIVATE);
+                }
+                bass.setStrength((short) sharedPreferences.getInt(AudioEffectUtil.BASS_STRENGTH, 0));
+                // TODO Remove toasts when feature is finished
+                Toast.makeText(this, "Bass: " + bass.getRoundedStrength(), Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(this, "Setting Strength Not Supported", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

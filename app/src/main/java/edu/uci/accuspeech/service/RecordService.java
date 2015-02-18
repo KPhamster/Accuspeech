@@ -92,7 +92,7 @@ public class RecordService extends Service {
      * @throws IOException
      *  Throws this exception if there are problems with file IO
      */
-        public void startRecording() throws IOException {
+    public void startRecording() throws IOException {
         // If we are already recording this should return and do nothing
         if (isRecording) {
             return;

@@ -27,15 +27,18 @@ public class PastRecordingsListFragment extends Fragment {
         ViewGroup recordingList = (ViewGroup) getView().findViewById(R.id.recordings_list);
         View noFilesFound = getView().findViewById(R.id.empty_list);
         File directory = new File(AudioService.PAST_RECORDINGS_FILE_PATH);
-        String[] listOfRecords = directory.list(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String filename) {
-                return filename.endsWith(".wav");
-            }
-        });
+        String[] listOfRecords = null;
+        if (directory.exists()){
+            listOfRecords = directory.list(new FilenameFilter() {
+                @Override
+                public boolean accept(File dir, String filename) {
+                    return filename.endsWith(".wav");
+                }
+            });
+        }
 
         // If there are no files, hide list and say there are no files
-        if (listOfRecords.length == 0) {
+        if (listOfRecords == null || listOfRecords.length == 0) {
             noFilesFound.setVisibility(View.VISIBLE);
             recordingList.setVisibility(View.GONE);
         } else {

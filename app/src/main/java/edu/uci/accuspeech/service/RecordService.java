@@ -15,7 +15,6 @@ import android.media.audiofx.AudioEffect;
 import android.media.audiofx.AutomaticGainControl;
 import android.os.Binder;
 import android.os.IBinder;
-import android.util.Log;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -96,13 +95,7 @@ public class RecordService extends AudioService {
         isRecording = true;
         final int iSampleRate = AudioTrack.getNativeOutputSampleRate(AudioManager.STREAM_SYSTEM);
         iAudioBufferSize = AudioRecord.getMinBufferSize(iSampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
-        File rawFileDirectory = new File(RAW_FILE_PATH);
-        rawFileDirectory.mkdirs();
         File rawFile = new File(RAW_FILE_PATH, RAW_FILE_NAME);
-
-        //Deletes to make sure that an older version of this isn't on the device
-        //because it causes crashes.
-        rawFile.delete();
         bos = new BufferedOutputStream(new FileOutputStream(rawFile));
         recorder = new AudioRecord(MediaRecorder.AudioSource.VOICE_RECOGNITION, iSampleRate, AudioFormat.CHANNEL_IN_MONO,
                 AudioFormat.ENCODING_PCM_16BIT, iAudioBufferSize);
@@ -120,7 +113,7 @@ public class RecordService extends AudioService {
         recordThread.start();
 
         // Create a notification for this service while we are recording
-        // Basically this is copy-paste from Android docs on foreground serviceS
+        // Basically this is copy-paste from Android docs on foreground service
         Notification notification = new Notification(R.drawable.ic_launcher, getText(R.string.ticker_text),
                 System.currentTimeMillis());
         Intent notificationIntent = new Intent(this, MainActivity.class);

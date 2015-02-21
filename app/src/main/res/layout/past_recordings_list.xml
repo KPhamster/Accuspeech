@@ -10,9 +10,10 @@
         android:id="@+id/empty_list"/>
     <LinearLayout
         android:id="@+id/recordings_list"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginRight="20dp">
 
         </LinearLayout>
 </LinearLayout>

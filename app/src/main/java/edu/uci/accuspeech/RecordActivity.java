@@ -135,6 +135,10 @@ public class RecordActivity extends NavigationActivity {
             try {
                 mService.stopRecording();
                 isTimerRunning = false;
+                Intent intent = new Intent(this,SaveActivity.class);
+                intent.putExtra("timer", timerText.getText());
+                startActivity(intent);
+                timerText.setText(R.string.zero_time);
             } catch (IOException e) {
                 e.printStackTrace();
             }

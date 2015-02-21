@@ -40,7 +40,7 @@ public class PastRecordingsActivity extends NavigationActivity {
     private void loadFile(String fileName) {
         if (mService != null) {
             mService.reset();
-            mService.setupAudioFile(fileName);
+            mService.setupAudioFile(fileName + ".wav");
             updatePlayerControls();
         }
     }
@@ -153,9 +153,18 @@ public class PastRecordingsActivity extends NavigationActivity {
     }
 
     public void onPastRecordingSelected(View view) {
+        View v = findViewById(R.id.recordings_list).findViewWithTag("selected");
+        if (v != null) {
+            v.setTag("");
+            v.setBackgroundColor(getResources().getColor(R.color.white));
+        }
         TextView name = (TextView) view.findViewById(R.id.name);
         loadFile((String) name.getText());
+        view.setBackgroundColor(getResources().getColor(R.color.grey));
+        view.setTag("selected");
     }
+
+
     @Override
     public void onResume() {
         super.onResume();

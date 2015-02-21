@@ -25,4 +25,9 @@
     <string name="no_recordings">There are no past recordings.</string>
     <string name="noise_suppression_box_title">Noise Suppression</string>
     <string name="noise_suppression_box_desc">This is what noise suppression does</string>
+    <string name="save_recording">Set Recording Name</string>
+    <string name="save_recording_button">Save</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="delete_button">Delete</string>
+    <string name="cannot_rename_empty">Cannot have a blank name</string>
 </resources>

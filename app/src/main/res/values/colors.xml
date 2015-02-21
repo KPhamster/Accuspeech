@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name = "grey" type = "color"> #C2C2C2 </item>
+    <item name = "white" type = "color"> #FFFFFF </item>
+
+</resources>

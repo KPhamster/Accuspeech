@@ -148,9 +148,6 @@ public class RecordService extends AudioService {
         recorder.release();
         bos.close();
 
-        // TODO This should be done in a background thread, currently it is being run on main thread
-        // TODO This could lead to UI lag
-        ConvertRawToWav.properWAV(RAW_FILE_PATH + RAW_FILE_NAME, DEFAULT_WAV_FILENAME, AudioTrack.getNativeOutputSampleRate(AudioManager.STREAM_SYSTEM));
         bos = null;
         recorder = null;
         recordThread = null;
@@ -188,7 +185,9 @@ public class RecordService extends AudioService {
             {
                 while((iBufferReadResult = recorder.read(buffer, 0, iAudioBufferSize)) > 0) {
                     try {
-                        bos.write(buffer, 0, iBufferReadResult);
+                        if (bos != null) {
+                            bos.write(buffer, 0, iBufferReadResult);
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

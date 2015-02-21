@@ -31,6 +31,8 @@ public class BassBoostControlFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.bass_boost_control, container, false);
         ViewGroup control = (ViewGroup) rootView.findViewById(R.id.control);
         View notSupportedText = rootView.findViewById(R.id.not_supported);
+        //Creates the subtitle that says the current state of the effect
+        final TextView subtitle = (TextView) rootView.findViewById(R.id.subtitle);
 
         if (!AudioEffectUtil.isSupported(AudioEffect.EFFECT_TYPE_BASS_BOOST)) {
             notSupportedText.setVisibility(View.VISIBLE);
@@ -48,6 +50,19 @@ public class BassBoostControlFragment extends Fragment {
             upperBound.setText("1000");
             bassBar.setMax(1000);
             bassBar.setProgress(sharedPreferences.getInt(AudioEffectUtil.BASS_STRENGTH, 0));
+            subtitle.setText("is currently " + bassBar.getProgress());
+            bassBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    subtitle.setText("is currently " + progress);
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {}
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {}
+            });
         }
         return rootView;
     }
@@ -55,9 +70,11 @@ public class BassBoostControlFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        bassLevel = bassBar.getProgress();
-        // We are saving this on pause so we only save once instead of saving it everytime
-        // it is changed which slows down the main thread and makes control look bad
-        sharedPreferences.edit().putInt(AudioEffectUtil.BASS_STRENGTH, bassLevel).commit();
+        if(bassBar != null) {
+            bassLevel = bassBar.getProgress();
+            // We are saving this on pause so we only save once instead of saving it everytime
+            // it is changed which slows down the main thread and makes control look bad
+            sharedPreferences.edit().putInt(AudioEffectUtil.BASS_STRENGTH, bassLevel).commit();
+        }
     }
 }

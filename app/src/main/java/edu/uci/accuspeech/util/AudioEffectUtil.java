@@ -12,6 +12,7 @@ public class AudioEffectUtil {
     public static final String SETTINGS_PREFS = "RecordServiceSettings";
     public static final String AUTO_GAIN_CONTROL_KEY = "AUTO_GAIN_CONTROL_KEY";
     public static final String BASS_STRENGTH = "PARAM_STRENGTH";
+    public static final String NOISE_SUPPRESSION_KEY = "NOISE_SUPPRESSION_KEY";
 
     /**
      *  Supporter method for checking if audio effect works

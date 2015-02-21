@@ -23,4 +23,6 @@
     <string name="decibel_meter_box_desc">This is what a decibel meter does.</string>
     <string name="feature_not_supported">Not supported on this device.</string>
     <string name="no_recordings">There are no past recordings.</string>
+    <string name="noise_suppression_box_title">Noise Suppression</string>
+    <string name="noise_suppression_box_desc">This is what noise suppression does</string>
 </resources>

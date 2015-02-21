@@ -18,8 +18,8 @@
 
     <style name="BoxText">
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:padding">15dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:padding">10dp</item>
     </style>
 
     <style name="BoxTitle" parent="BoxText">
@@ -30,7 +30,7 @@
 
     <style name="BoxFeatureNotSupported"  parent="BoxText">
         <item name="android:visibility">gone</item>
-        <item name="android:text">"@string/feature_not_supported"</item>
+        <item name="android:text">@string/feature_not_supported</item>
         <item name="android:textColor">#FF0000</item>
         <item name="android:textSize">12dp</item>
     </style>

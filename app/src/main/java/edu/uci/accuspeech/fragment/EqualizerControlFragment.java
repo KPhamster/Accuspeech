@@ -27,7 +27,7 @@ public class EqualizerControlFragment extends Fragment {
             notSupportedText.setVisibility(View.VISIBLE);
             control.setVisibility(View.GONE);
         } else {
-            // TODO Kevin's code would go here
+            // TODO Michael's code would go here
             // do this for as many sliders are needed
             for (int i = 0; i < 2; i++) {
                 View sliderControl = inflater.inflate(R.layout.seek_bar_control, control, false);

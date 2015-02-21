@@ -9,12 +9,12 @@
         android:orientation="horizontal">
         <TextView
             style="@style/BoxTitle"
-            android:text="@string/agc_box_title"/>
+            android:text="@string/noise_suppression_box_title"/>
         <TextView
             style="@style/BoxText"
             android:id="@+id/subtitle"/>
     </LinearLayout>
-    <TextView
+        <TextView
         style="@style/BoxFeatureNotSupported"
         android:id="@+id/not_supported" />
     <RadioGroup
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="On"
-            android:id="@+id/gainControlOn"
+            android:id="@+id/noiseSuppressionOn"
             android:layout_gravity="center_horizontal"
             android:checked="true" />
 
@@ -39,12 +39,12 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
             android:text="Off"
-            android:id="@+id/gainControlOff"
+            android:id="@+id/noiseSuppressionOff"
             android:layout_gravity="right" />
 
     </RadioGroup>
 
     <TextView
         style="@style/BoxFooter"
-        android:text="@string/agc_box_desc"/>
+        android:text="@string/noise_suppression_box_desc"/>
 </LinearLayout>

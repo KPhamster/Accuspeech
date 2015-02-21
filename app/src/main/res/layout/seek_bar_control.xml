@@ -23,12 +23,16 @@
 
         <TextView
             style="@style/BoxText"
+            android:padding="0dp"
+            android:layout_marginLeft="10dp"
             android:id="@+id/seek_bar_lower_bound"
             android:gravity="left"
             android:layout_weight="1" />
 
         <TextView
             style="@style/BoxText"
+            android:padding="0dp"
+            android:layout_marginRight="10dp"
             android:id="@+id/seek_bar_upper_bound"
             android:gravity="right"
             android:layout_weight="1" />

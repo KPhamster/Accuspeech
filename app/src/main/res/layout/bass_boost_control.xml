@@ -3,9 +3,17 @@
     style="@style/Box">
 
 
-    <TextView
-        style="@style/BoxTitle"
-        android:text="@string/bass_boost_title"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/BoxTitle"
+            android:text="@string/bass_boost_title"/>
+        <TextView
+            style="@style/BoxText"
+            android:id="@+id/subtitle"/>
+    </LinearLayout>
     <TextView
         style="@style/BoxFeatureNotSupported"
         android:id="@+id/not_supported" />

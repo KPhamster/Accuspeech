@@ -113,13 +113,12 @@ public class PlayService extends AudioService {
                     sharedPreferences = getSharedPreferences(AudioEffectUtil.SETTINGS_PREFS, Context.MODE_PRIVATE);
                 }
                 bass.setStrength((short) sharedPreferences.getInt(AudioEffectUtil.BASS_STRENGTH, 0));
-                // TODO Remove toasts when feature is finished
-                Toast.makeText(this, "Bass: " + bass.getRoundedStrength(), Toast.LENGTH_SHORT).show();
             }
             else{
-                Toast.makeText(this, "Setting Strength Not Supported", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Bass Boost Setting Strength Not Supported", Toast.LENGTH_SHORT).show();
             }
         }
+        // TODO Kevin's code for noise suppression would go here
     }
 
     public void stop() {

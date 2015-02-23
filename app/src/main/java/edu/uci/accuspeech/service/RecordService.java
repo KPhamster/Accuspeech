@@ -13,6 +13,7 @@ import android.media.AudioTrack;
 import android.media.MediaRecorder;
 import android.media.audiofx.AudioEffect;
 import android.media.audiofx.AutomaticGainControl;
+import android.media.audiofx.NoiseSuppressor;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
@@ -116,6 +117,13 @@ public class RecordService extends AudioService {
             gainControl.setEnabled(sharedPreferences.getBoolean(AudioEffectUtil.AUTO_GAIN_CONTROL_KEY, false));
         }
 
+        if(AudioEffectUtil.isSupported(AudioEffect.EFFECT_TYPE_NS)){
+            NoiseSuppressor noiseSupp = NoiseSuppressor.create(recorder.getAudioSessionId());
+            if(sharedPreferences == null){
+                sharedPreferences = getSharedPreferences(AudioEffectUtil.SETTINGS_PREFS, Context.MODE_PRIVATE);
+            }
+            noiseSupp.setEnabled(sharedPreferences.getBoolean(AudioEffectUtil.NOISE_SUPPRESSION_KEY, false));
+        }
         recordThread = new RecordThread(bos, recorder);
         recordThread.start();
 

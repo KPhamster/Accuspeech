@@ -13,6 +13,8 @@ public class AudioEffectUtil {
     public static final String AUTO_GAIN_CONTROL_KEY = "AUTO_GAIN_CONTROL_KEY";
     public static final String BASS_STRENGTH = "PARAM_STRENGTH";
     public static final String NOISE_SUPPRESSION_KEY = "NOISE_SUPPRESSION_KEY";
+    public static final String BASS_BOOST_DEFAULT_ENABLED = "BASS_BOOST_DEFAULT_ENABLED";
+    public static final String EQUALIZER_DEFAULT_ENABLED = "EQUALIZER_DEFAULT_ENABLED";
 
     /**
      *  Supporter method for checking if audio effect works

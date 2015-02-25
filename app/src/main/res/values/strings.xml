@@ -30,4 +30,6 @@
     <string name="cancel_button">Cancel</string>
     <string name="delete_button">Delete</string>
     <string name="cannot_rename_empty">Cannot have a blank name</string>
+    <string name="delete_verification">Are you sure?</string>
+    <string name="delete_message">This will permanently delete this recording</string>
 </resources>

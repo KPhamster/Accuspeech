@@ -3,7 +3,6 @@ package edu.uci.accuspeech.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 import java.io.File;
 import java.io.FilenameFilter;
 
+import edu.uci.accuspeech.PastRecordingsActivity;
 import edu.uci.accuspeech.R;
 import edu.uci.accuspeech.RenameActivity;
 import edu.uci.accuspeech.service.AudioService;
@@ -40,6 +40,9 @@ public class PastRecordingsListFragment extends Fragment {
             });
         }
 
+        PastRecordingsActivity activity = (PastRecordingsActivity) getActivity();
+        String fileName = activity.getCurrentlySelectedFile();
+
         // If there are no files, hide list and say there are no files
         if (listOfRecords == null || listOfRecords.length == 0) {
             noFilesFound.setVisibility(View.VISIBLE);
@@ -50,9 +53,14 @@ public class PastRecordingsListFragment extends Fragment {
             recordingList.setVisibility(View.VISIBLE);
             recordingList.removeAllViews();
             LayoutInflater inflater = LayoutInflater.from(getActivity());
+            boolean inList = false;
             for (final String file : listOfRecords) {
                 final String fileWithoutWav = file.substring(0,file.length() - 4);
                 View pastRecording = inflater.inflate(R.layout.past_recording, recordingList, false);
+                if (fileWithoutWav.equals(fileName)) {
+                    pastRecording.setBackgroundColor(getResources().getColor(R.color.grey));
+                    inList = true;
+                }
                 //Brings up the display to rename of delete a past recording
                 pastRecording.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
@@ -66,6 +74,9 @@ public class PastRecordingsListFragment extends Fragment {
                 TextView name = (TextView) pastRecording.findViewById(R.id.name);
                 name.setText(fileWithoutWav);
                 recordingList.addView(pastRecording);
+            }
+            if (!inList) {
+                activity.clearPlayer();
             }
         }
     }

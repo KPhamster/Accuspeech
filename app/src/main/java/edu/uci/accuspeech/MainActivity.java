@@ -22,10 +22,10 @@ public class MainActivity extends NavigationActivity {
                     .add(R.id.container, new GainControlFragment())
                     .commit();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new BassBoostControlFragment())
+                    .add(R.id.container, new NoiseSuppressionFragment())
                     .commit();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new NoiseSuppressionFragment())
+                    .add(R.id.container, new BassBoostControlFragment())
                     .commit();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new EqualizerControlFragment())

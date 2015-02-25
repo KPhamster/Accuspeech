@@ -24,6 +24,7 @@
         <activity android:name=".RecordActivity" android:screenOrientation="portrait" android:launchMode="singleInstance"/>
         <activity android:name=".PastRecordingsActivity" android:screenOrientation="portrait" android:launchMode="singleInstance"/>
         <activity android:name=".SaveActivity" android:screenOrientation="portrait" android:theme="@style/Box.Dialog"/>
+        <activity android:name=".DeleteVerificationActivity" android:screenOrientation="portrait" android:theme="@style/Box.Dialog"/>
         <activity android:name=".RenameActivity" android:screenOrientation="portrait" android:theme="@style/Box.Dialog"/>
         <service android:name=".service.RecordService" android:exported="false"/>
         <service android:name=".service.PlayService" android:exported="false"/>

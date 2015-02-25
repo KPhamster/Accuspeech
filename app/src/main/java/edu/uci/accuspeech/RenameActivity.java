@@ -1,9 +1,6 @@
 package edu.uci.accuspeech;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.media.AudioManager;
-import android.media.AudioTrack;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -15,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import edu.uci.accuspeech.fragment.PastRecordingsListFragment;
 import edu.uci.accuspeech.service.AudioService;
 import edu.uci.accuspeech.service.RecordService;
 import edu.uci.accuspeech.util.ConvertRawToWav;

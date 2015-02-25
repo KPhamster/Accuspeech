@@ -2,14 +2,10 @@ package edu.uci.accuspeech;
 
 
 import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -52,7 +48,8 @@ public class SaveActivity extends Activity {
     }
 
     public void cancel(View view){
+        Intent intent = new Intent(this, DeleteVerificationActivity.class);
+        startActivity(intent);
         finish();
-        //TODO add in that this will delete recording
     }
 }

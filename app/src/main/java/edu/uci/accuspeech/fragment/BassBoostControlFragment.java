@@ -8,10 +8,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.media.audiofx.BassBoost;
-import android.widget.Toast;
 
 import edu.uci.accuspeech.R;
 import edu.uci.accuspeech.util.AudioEffectUtil;
@@ -38,6 +39,19 @@ public class BassBoostControlFragment extends Fragment {
             notSupportedText.setVisibility(View.VISIBLE);
             control.setVisibility(View.GONE);
         } else {
+            //Checks to see if the user wants to use device's default
+            final CheckBox bassBoostDefault = (CheckBox) rootView.findViewById(R.id.bassBoostDefault);
+
+            bassBoostDefault.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    sharedPreferences.edit().putBoolean(AudioEffectUtil.BASS_BOOST_DEFAULT_ENABLED, isChecked).commit();
+                    bassBar.setEnabled(!isChecked);
+                }
+            });
+
+
+
             View sliderControl = inflater.inflate(R.layout.seek_bar_control, control, false);
             control.addView(sliderControl);
             bassBar = (SeekBar)sliderControl.findViewById(R.id.seek_bar);
@@ -63,6 +77,7 @@ public class BassBoostControlFragment extends Fragment {
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {}
             });
+            bassBoostDefault.setChecked(sharedPreferences.getBoolean(AudioEffectUtil.BASS_BOOST_DEFAULT_ENABLED, false));
         }
         return rootView;
     }

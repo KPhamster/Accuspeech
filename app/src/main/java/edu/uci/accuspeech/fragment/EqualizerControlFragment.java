@@ -2,13 +2,14 @@ package edu.uci.accuspeech.fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.media.AudioAttributes;
 import android.media.audiofx.AudioEffect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.media.audiofx.Equalizer;
@@ -41,7 +42,19 @@ public class EqualizerControlFragment extends Fragment {
             notSupportedText.setVisibility(View.VISIBLE);
             control.setVisibility(View.GONE);
         } else {
-            // do this for as many sliders are needed
+            //Checks to see if the user wants to use device's default
+            final CheckBox equalizerDefault = (CheckBox) rootView.findViewById(R.id.equalizerDefault);
+            equalizerDefault.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    sharedPreferences.edit().putBoolean(AudioEffectUtil.EQUALIZER_DEFAULT_ENABLED, isChecked).commit();
+                    eqBar1.setEnabled(!isChecked);
+                    eqBar2.setEnabled(!isChecked);
+                    eqBar3.setEnabled(!isChecked);
+                    eqBar4.setEnabled(!isChecked);
+                }
+            });
+
             /* Note: Each equalizer bar represents the "frequency band", which filters
                the audio signal falling within their specific frequency range.
                Source: http://www.101apps.co.za/index.php/articles/perfect-sound-using-the-equalizer-effect-a-tutorial.html
@@ -182,20 +195,8 @@ public class EqualizerControlFragment extends Fragment {
                 }
 
             });
+            equalizerDefault.setChecked(sharedPreferences.getBoolean(AudioEffectUtil.EQUALIZER_DEFAULT_ENABLED, false));
         }
         return rootView;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -109,6 +109,9 @@ public class DecibelMeterFragment extends Fragment {
                 }
                 int amp = mRecorder.getMaxAmplitude();
                 int db = (int) (20*Math.log10(amp));
+                if (db < 0) {
+                    db = 0;
+                }
                 publishProgress(db);
                 try {
                     Thread.sleep(300);

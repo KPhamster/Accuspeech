@@ -7,6 +7,18 @@
         android:text="@string/decibel_meter_title"/>
 
     <TextView
+        style="@style/BoxText"
+        android:id="@+id/decibelText"
+        android:text="@string/decibel_meter_off"/>
+
+    <Button
+        android:id="@+id/decibelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/start"
+                />
+    <TextView
         style="@style/BoxFooter"
         android:text="@string/decibel_meter_box_desc"/>
 </LinearLayout>

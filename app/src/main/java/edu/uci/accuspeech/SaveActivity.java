@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.AudioTrack;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -39,17 +40,42 @@ public class SaveActivity extends Activity {
         if (!TextUtils.isEmpty(defaultFileName.getText())) {
             fileName = defaultFileName.getText().toString();
         }
-        // TODO This should be done in a background thread, currently it is being run on main thread
-        // TODO This could lead to UI lag
-        ConvertRawToWav.properWAV(RecordService.RAW_FILE_PATH + RecordService.RAW_FILE_NAME,
-                AudioService.DEFAULT_WAV_PATH + fileName + ".wav", AudioTrack.getNativeOutputSampleRate(AudioManager.STREAM_SYSTEM));
-        startActivity(new Intent(this, PastRecordingsActivity.class));
-        finish();
+        findViewById(R.id.container).setVisibility(View.GONE);
+        findViewById(R.id.saving).setVisibility(View.VISIBLE);
+        new AsyncSave(RecordService.RAW_FILE_PATH + RecordService.RAW_FILE_NAME,
+                AudioService.DEFAULT_WAV_PATH + fileName + ".wav", AudioTrack.getNativeOutputSampleRate(AudioManager.STREAM_SYSTEM)).execute();
     }
 
     public void cancel(View view){
         Intent intent = new Intent(this, DeleteVerificationActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private class AsyncSave extends AsyncTask<Void, Void, Void> {
+
+        private final String rawFile;
+        private final String newWavFile;
+        private final int nativeOutputSampleRate;
+
+        public AsyncSave(String rawFile, String newWavFile, int nativeOutputSampleRate) {
+            this.rawFile = rawFile;
+            this.newWavFile = newWavFile;
+            this.nativeOutputSampleRate = nativeOutputSampleRate;
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            ConvertRawToWav.properWAV(rawFile, newWavFile, nativeOutputSampleRate);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            startActivity(new Intent(SaveActivity.this, PastRecordingsActivity.class));
+            finish();
+        }
+
     }
 }

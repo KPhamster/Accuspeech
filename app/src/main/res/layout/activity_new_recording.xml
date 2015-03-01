@@ -46,6 +46,7 @@
                 android:layout_height="match_parent">
                 <Button
                     style="@style/BoxTitle"
+                    android:textSize="30dp"
                     android:layout_centerHorizontal="true"
                     android:id="@+id/recordButton"
                     android:onClick="onRecord"

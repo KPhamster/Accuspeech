@@ -13,9 +13,10 @@ import android.media.AudioTrack;
 import android.media.MediaRecorder;
 import android.media.audiofx.AudioEffect;
 import android.media.audiofx.AutomaticGainControl;
+import android.media.audiofx.NoiseSuppressor;
 import android.os.Binder;
 import android.os.IBinder;
-import android.util.Log;
+
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -26,7 +27,6 @@ import java.io.OutputStream;
 import edu.uci.accuspeech.MainActivity;
 import edu.uci.accuspeech.R;
 import edu.uci.accuspeech.util.AudioEffectUtil;
-import edu.uci.accuspeech.util.ConvertRawToWav;
 
 /**
  * This class contains the logic for recording sound using the mic on device.
@@ -114,6 +114,15 @@ public class RecordService extends AudioService {
                 sharedPreferences = getSharedPreferences(AudioEffectUtil.SETTINGS_PREFS, Context.MODE_PRIVATE);
             }
             gainControl.setEnabled(sharedPreferences.getBoolean(AudioEffectUtil.AUTO_GAIN_CONTROL_KEY, false));
+        }
+
+        //  Check if Noise Suppression is supported, if so retrieve from shared prefs
+        if(AudioEffectUtil.isSupported(AudioEffect.EFFECT_TYPE_NS)){
+            NoiseSuppressor noiseSupp = NoiseSuppressor.create(recorder.getAudioSessionId());
+            if(sharedPreferences == null){
+                sharedPreferences = getSharedPreferences(AudioEffectUtil.SETTINGS_PREFS, Context.MODE_PRIVATE);
+            }
+            noiseSupp.setEnabled(sharedPreferences.getBoolean(AudioEffectUtil.NOISE_SUPPRESSION_KEY, false));
         }
 
         recordThread = new RecordThread(bos, recorder);

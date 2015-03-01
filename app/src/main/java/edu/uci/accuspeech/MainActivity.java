@@ -1,6 +1,10 @@
 package edu.uci.accuspeech;
 
 import android.os.Bundle;
+import android.os.Debug;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.v4.app.FragmentTransaction;
 
 import edu.uci.accuspeech.fragment.BassBoostControlFragment;
 import edu.uci.accuspeech.fragment.DecibelMeterFragment;
@@ -18,21 +22,13 @@ public class MainActivity extends NavigationActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new GainControlFragment())
-                    .commit();
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new BassBoostControlFragment())
-                    .commit();
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new NoiseSuppressionFragment())
-                    .commit();
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new EqualizerControlFragment())
-                    .commit();
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new DecibelMeterFragment())
-                    .commit();
+            FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
+            tx.add(R.id.container, new GainControlFragment());
+            tx.add(R.id.container, new NoiseSuppressionFragment());
+            tx.add(R.id.container, new BassBoostControlFragment());
+            tx.add(R.id.container, new EqualizerControlFragment());
+            tx.add(R.id.container, new DecibelMeterFragment());
+            tx.commit();
         }
     }
 }

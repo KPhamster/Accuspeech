@@ -106,19 +106,26 @@ public class PlayService extends AudioService {
     }
 
     private void setupAudioSettings(int sessionId) {
+        if (sharedPreferences == null) {
+            sharedPreferences = getSharedPreferences(AudioEffectUtil.SETTINGS_PREFS, Context.MODE_PRIVATE);
+        }
         if (AudioEffectUtil.isSupported(AudioEffect.EFFECT_TYPE_BASS_BOOST)) {
-            BassBoost bass = new BassBoost(0, sessionId);
-            if(bass.getStrengthSupported()) {
-                if (sharedPreferences == null) {
-                    sharedPreferences = getSharedPreferences(AudioEffectUtil.SETTINGS_PREFS, Context.MODE_PRIVATE);
+            if (!sharedPreferences.getBoolean(AudioEffectUtil.BASS_BOOST_DEFAULT_ENABLED, false)){
+                BassBoost bass = new BassBoost(0, sessionId);
+                if(bass.getStrengthSupported()) {
+                    bass.setStrength((short) sharedPreferences.getInt(AudioEffectUtil.BASS_STRENGTH, 0));
                 }
-                bass.setStrength((short) sharedPreferences.getInt(AudioEffectUtil.BASS_STRENGTH, 0));
-            }
-            else{
-                Toast.makeText(this, "Bass Boost Setting Strength Not Supported", Toast.LENGTH_SHORT).show();
+                else{
+                    Toast.makeText(this, "Bass Boost Setting Strength Not Supported", Toast.LENGTH_SHORT).show();
+                }
             }
         }
-        // TODO Kevin's code for noise suppression would go here
+        if (AudioEffectUtil.isSupported(AudioEffect.EFFECT_TYPE_EQUALIZER)) {
+            if (!sharedPreferences.getBoolean(AudioEffectUtil.EQUALIZER_DEFAULT_ENABLED, false)) {
+                // TODO Michael's implementation code here.
+            }
+        }
+
     }
 
     public void stop() {

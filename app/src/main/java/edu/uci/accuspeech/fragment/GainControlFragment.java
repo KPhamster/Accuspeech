@@ -35,6 +35,13 @@ public class GainControlFragment extends Fragment {
             notSupportedText.setVisibility(View.VISIBLE);
             radioGroup.setVisibility(View.GONE);
         } else {
+            if (sharedPreferences.getBoolean(AudioEffectUtil.AUTO_GAIN_CONTROL_KEY, false)) {
+                radioGroup.check(R.id.gainControlOff);
+                subtitle.setText("is currently Off");
+            } else {
+                radioGroup.check(R.id.gainControlOn);
+                subtitle.setText("is currently On");
+            }
             radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -50,14 +57,6 @@ public class GainControlFragment extends Fragment {
                     }
                 }
             });
-                radioGroup.clearCheck();
-                if (sharedPreferences.getBoolean(AudioEffectUtil.AUTO_GAIN_CONTROL_KEY, false)) {
-                    radioGroup.check(R.id.gainControlOff);
-                    subtitle.setText("is currently Off");
-                } else {
-                    radioGroup.check(R.id.gainControlOn);
-                    subtitle.setText("is currently On");
-            }
         }
         return rootView;
     }

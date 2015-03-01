@@ -199,4 +199,16 @@ public class PastRecordingsActivity extends NavigationActivity {
             mBound = false;
         }
     }
+
+    public String getCurrentlySelectedFile() {
+        return currentPlayingFileName.getText().toString();
+    }
+
+    public void clearPlayer() {
+        if (mService != null) {
+            mService.reset();
+            currentPlayingFileName.setText("");
+            updatePlayerControls();
+        }
+    }
 }

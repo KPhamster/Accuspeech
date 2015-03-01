@@ -5,13 +5,15 @@ import android.content.SharedPreferences;
 import android.media.audiofx.AudioEffect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.media.audiofx.BassBoost;
-import android.widget.Toast;
 
 import edu.uci.accuspeech.R;
 import edu.uci.accuspeech.util.AudioEffectUtil;
@@ -38,9 +40,20 @@ public class BassBoostControlFragment extends Fragment {
             notSupportedText.setVisibility(View.VISIBLE);
             control.setVisibility(View.GONE);
         } else {
+            //Checks to see if the user wants to use device's default
+            final CheckBox bassBoostDefault = (CheckBox) rootView.findViewById(R.id.bassBoostDefault);
+            boolean isChecked = sharedPreferences.getBoolean(AudioEffectUtil.BASS_BOOST_DEFAULT_ENABLED, false);
+            bassBoostDefault.setChecked(isChecked);
+            bassBoostDefault.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    sharedPreferences.edit().putBoolean(AudioEffectUtil.BASS_BOOST_DEFAULT_ENABLED, isChecked).commit();
+                    bassBar.setEnabled(!isChecked);
+                }
+            });
+
             View sliderControl = inflater.inflate(R.layout.seek_bar_control, control, false);
             control.addView(sliderControl);
-            bassBar = (SeekBar)sliderControl.findViewById(R.id.seek_bar);
             TextView seekBarName = (TextView) sliderControl.findViewById(R.id.seek_bar_name);
             TextView lowerBound = (TextView) sliderControl.findViewById(R.id.seek_bar_lower_bound);
             TextView upperBound = (TextView) sliderControl.findViewById(R.id.seek_bar_upper_bound);
@@ -48,6 +61,8 @@ public class BassBoostControlFragment extends Fragment {
             seekBarName.setVisibility(View.GONE);
             lowerBound.setText("0");
             upperBound.setText("1000");
+            bassBar = (SeekBar)sliderControl.findViewById(R.id.seek_bar);
+            bassBar.setEnabled(!isChecked);
             bassBar.setMax(1000);
             bassBar.setProgress(sharedPreferences.getInt(AudioEffectUtil.BASS_STRENGTH, 0));
             subtitle.setText("is currently " + bassBar.getProgress());

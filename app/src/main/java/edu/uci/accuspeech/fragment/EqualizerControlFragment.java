@@ -3,7 +3,6 @@ package edu.uci.accuspeech.fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioAttributes;
-import android.media.AudioManager;
 import android.media.audiofx.AudioEffect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,25 +19,16 @@ import edu.uci.accuspeech.util.AudioEffectUtil;
 public class EqualizerControlFragment extends Fragment {
 
     Equalizer eq = new Equalizer(0, 0);
-    int eqLevel1 = 0;
-    int eqLevel2 = 0;
-    int eqLevel3 = 0;
-    int eqLevel4 = 0;
     SeekBar eqBar1;
     SeekBar eqBar2;
     SeekBar eqBar3;
     SeekBar eqBar4;
-    public SharedPreferences sharedPreferences;
-    final short eqIndex1 = 1;
-    final short eqIndex2 = 2;
-    final short eqIndex3 = 3;
-    final short eqIndex4 = 4;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // use shared prefs to save audio effect values
-        sharedPreferences = getActivity().getSharedPreferences(AudioEffectUtil.SETTINGS_PREFS, Context.MODE_PRIVATE);
+        final SharedPreferences sharedPreferences = getActivity().getSharedPreferences(AudioEffectUtil.SETTINGS_PREFS, Context.MODE_PRIVATE);
         View rootView = inflater.inflate(R.layout.equalizer_control, container, false);
         ViewGroup control = (ViewGroup) rootView.findViewById(R.id.control);
         View notSupportedText = rootView.findViewById(R.id.not_supported);
@@ -61,10 +51,10 @@ public class EqualizerControlFragment extends Fragment {
                Source: http://blog.audioforge.org/2012/12/tester.html
              */
             eq.setEnabled(true);
-            /*final short eqIndex1 = 1;
+            final short eqIndex1 = 1;
             final short eqIndex2 = 2;
             final short eqIndex3 = 3;
-            final short eqIndex4 = 4;*/
+            final short eqIndex4 = 4;
             final short lowerBandRange = eq.getBandLevelRange()[0];
             final short upperBandRange = eq.getBandLevelRange()[1];
             final int maxEqualizerLevel = upperBandRange - lowerBandRange;
@@ -81,8 +71,7 @@ public class EqualizerControlFragment extends Fragment {
             lowerBound.setText((lowerBandRange / 100) + "dB");
             upperBound.setText((upperBandRange / 100) + "dB");
             eqBar1.setMax(maxEqualizerLevel);
-            //eqBar1.setProgress(eq.getBandLevel(eqIndex1));
-            eqBar1.setProgress(sharedPreferences.getInt("eqBar1", eq.getBandLevel(eqIndex1)));
+            eqBar1.setProgress(eq.getBandLevel(eqIndex1));
             eqBar1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                     eq.setBandLevel(eqIndex1, (short) (progress + lowerBandRange));
@@ -115,8 +104,7 @@ public class EqualizerControlFragment extends Fragment {
             lowerBound2.setText((lowerBandRange / 100) + "dB");
             upperBound2.setText((upperBandRange / 100) + "dB");
             eqBar2.setMax(maxEqualizerLevel);
-            //eqBar2.setProgress(eq.getBandLevel(eqIndex2));
-            eqBar2.setProgress(sharedPreferences.getInt("eqBar2", eq.getBandLevel(eqIndex2)));
+            eqBar2.setProgress(eq.getBandLevel(eqIndex2));
             eqBar2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                     eq.setBandLevel(eqIndex2, (short) (progress + lowerBandRange));
@@ -146,8 +134,7 @@ public class EqualizerControlFragment extends Fragment {
             lowerBound3.setText((lowerBandRange / 100) + "dB");
             upperBound3.setText((upperBandRange / 100) + "dB");
             eqBar3.setMax(maxEqualizerLevel);
-            //eqBar3.setProgress(eq.getBandLevel(eqIndex3));
-            eqBar3.setProgress(sharedPreferences.getInt("eqBar3", eq.getBandLevel(eqIndex3)));
+            eqBar3.setProgress(eq.getBandLevel(eqIndex3));
             eqBar3.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                     eq.setBandLevel(eqIndex3, (short) (progress + lowerBandRange));
@@ -178,12 +165,12 @@ public class EqualizerControlFragment extends Fragment {
             lowerBound4.setText((lowerBandRange / 100) + "dB");
             upperBound4.setText((upperBandRange / 100) + "dB");
             eqBar4.setMax(maxEqualizerLevel);
-            //eqBar4.setProgress(eq.getBandLevel(eqIndex4));
-            eqBar4.setProgress(sharedPreferences.getInt("eqBar4", eq.getBandLevel(eqIndex4)));
+            eqBar4.setProgress(eq.getBandLevel(eqIndex4));
             eqBar4.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                     eq.setBandLevel(eqIndex4, (short) (progress + lowerBandRange));
                     bandName4.setText("Frequency Band 4 = " + (progress + lowerBandRange) + "Hz");
+
                 }
 
                 public void onStartTrackingTouch(SeekBar seekBar) {
@@ -197,25 +184,6 @@ public class EqualizerControlFragment extends Fragment {
             });
         }
         return rootView;
-    }
-
-    public void onPause() {
-        super.onPause();
-        if(eqBar1 != null) {
-            eqLevel1 = eqBar1.getProgress();
-            eqLevel2 = eqBar2.getProgress();
-            eqLevel3 = eqBar3.getProgress();
-            eqLevel4 = eqBar4.getProgress();
-            // We are saving this on pause so we only save once instead of saving it everytime
-            // it is changed which slows down the main thread and makes control look bad
-            //sharedPreferences.edit().putInt(AudioEffectUtil.BASS_STRENGTH, bassLevel).commit();
-            //sharedPreferences.edit().putInt(eq.setBandLevel(eqIndex1, (short) eqLevel), eqLevel)
-            sharedPreferences.edit().putInt("eqBar1", eqLevel1).commit();
-            sharedPreferences.edit().putInt("eqBar2", eqLevel2).commit();
-            sharedPreferences.edit().putInt("eqBar3", eqLevel3).commit();
-            sharedPreferences.edit().putInt("eqBar4", eqLevel4).commit();
-
-        }
     }
 }
 

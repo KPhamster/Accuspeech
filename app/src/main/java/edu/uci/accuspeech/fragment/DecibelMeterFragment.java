@@ -25,6 +25,8 @@ public class DecibelMeterFragment extends Fragment {
     private Button button;
 
     @Override
+
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.decibel_meter, container, false);
@@ -97,12 +99,17 @@ public class DecibelMeterFragment extends Fragment {
                 mEMA = 0.0;
             }
 
+
+
+
             // UPDATES
             while (true) {
                 if (isCancelled()) {
                     break;
                 }
-                publishProgress(mRecorder.getMaxAmplitude());
+                int amp = mRecorder.getMaxAmplitude();
+                int db = (int) (20*Math.log10(amp));
+                publishProgress(db);
                 try {
                     Thread.sleep(300);
                 } catch (InterruptedException e) {

@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.media.audiofx.AudioEffect;
 import android.media.audiofx.BassBoost;
+import android.media.audiofx.Equalizer;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
@@ -120,11 +121,15 @@ public class PlayService extends AudioService {
                 }
             }
         }
-        if (AudioEffectUtil.isSupported(AudioEffect.EFFECT_TYPE_EQUALIZER)) {
-            if (!sharedPreferences.getBoolean(AudioEffectUtil.EQUALIZER_DEFAULT_ENABLED, false)) {
-                // TODO Michael's implementation code here.
-            }
-        }
+//        if (AudioEffectUtil.isSupported(AudioEffect.EFFECT_TYPE_EQUALIZER)) {
+//            if (!sharedPreferences.getBoolean(AudioEffectUtil.EQUALIZER_DEFAULT_ENABLED, false)) {
+//                Equalizer equalizer = new Equalizer(0, sessionId);
+//                equalizer.setBandLevel((short) 1, (short) sharedPreferences.getInt(AudioEffectUtil.EQUALIZER_LEVEL_1, 0));
+//                equalizer.setBandLevel((short) 2, (short) sharedPreferences.getInt(AudioEffectUtil.EQUALIZER_LEVEL_2, 0));
+//                equalizer.setBandLevel((short) 3, (short) sharedPreferences.getInt(AudioEffectUtil.EQUALIZER_LEVEL_3, 0));
+//                equalizer.setBandLevel((short) 4, (short) sharedPreferences.getInt(AudioEffectUtil.EQUALIZER_LEVEL_4, 0));
+//            }
+//        }
 
     }
 

@@ -1,21 +1,14 @@
 package edu.uci.accuspeech.fragment;
 
-import android.content.Intent;
 import android.media.MediaRecorder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
-
-import java.io.IOException;
-
-import edu.uci.accuspeech.PastRecordingsActivity;
 import edu.uci.accuspeech.R;
 
 public class DecibelMeterFragment extends Fragment {
@@ -68,10 +61,7 @@ public class DecibelMeterFragment extends Fragment {
 
     private class AsyncMeter extends AsyncTask<Void, Integer, Boolean> {
 
-
-        static final private double EMA_FILTER = 0.6;
         private MediaRecorder mRecorder = null;
-        private double mEMA = 0.0;
         private TextView textView;
 
         AsyncMeter(TextView textView) {
@@ -96,7 +86,6 @@ public class DecibelMeterFragment extends Fragment {
                     mRecorder = null;
                     return false;
                 }
-                mEMA = 0.0;
             }
 
 

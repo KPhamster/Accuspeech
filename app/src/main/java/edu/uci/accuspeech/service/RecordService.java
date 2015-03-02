@@ -194,8 +194,8 @@ public class RecordService extends AudioService {
             {
                 while((iBufferReadResult = recorder.read(buffer, 0, iAudioBufferSize)) > 0) {
                     try {
-                        if (bos != null) {
-                            bos.write(buffer, 0, iBufferReadResult);
+                        if (out != null) {
+                            out.write(buffer, 0, iBufferReadResult);
                         }
                     } catch (IOException e) {
                         e.printStackTrace();

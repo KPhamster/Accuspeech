@@ -2,7 +2,6 @@ package edu.uci.accuspeech.fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.media.AudioAttributes;
 import android.media.audiofx.AudioEffect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,19 +22,16 @@ public class EqualizerControlFragment extends Fragment {
     SeekBar eqBar2;
     SeekBar eqBar3;
     SeekBar eqBar4;
+    public SharedPreferences sharedPreferences;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // use shared prefs to save audio effect values
-        final SharedPreferences sharedPreferences = getActivity().getSharedPreferences(AudioEffectUtil.SETTINGS_PREFS, Context.MODE_PRIVATE);
+        sharedPreferences = getActivity().getSharedPreferences(AudioEffectUtil.SETTINGS_PREFS, Context.MODE_PRIVATE);
         View rootView = inflater.inflate(R.layout.equalizer_control, container, false);
         ViewGroup control = (ViewGroup) rootView.findViewById(R.id.control);
         View notSupportedText = rootView.findViewById(R.id.not_supported);
-        //Subtitles for each bar
-        final TextView subtitle = (TextView) rootView.findViewById(R.id.subtitle);
-
-        //end subtitles
 
         if (!AudioEffectUtil.isSupported(AudioEffect.EFFECT_TYPE_EQUALIZER)) {
             notSupportedText.setVisibility(View.VISIBLE);
@@ -59,6 +55,11 @@ public class EqualizerControlFragment extends Fragment {
             final short upperBandRange = eq.getBandLevelRange()[1];
             final int maxEqualizerLevel = upperBandRange - lowerBandRange;
 
+            eq.setBandLevel(eqIndex1, (short) sharedPreferences.getInt(AudioEffectUtil.EQUALIZER_LEVEL_1, 0));
+            eq.setBandLevel(eqIndex2, (short) sharedPreferences.getInt(AudioEffectUtil.EQUALIZER_LEVEL_2, 0));
+            eq.setBandLevel(eqIndex3, (short) sharedPreferences.getInt(AudioEffectUtil.EQUALIZER_LEVEL_3, 0));
+            eq.setBandLevel(eqIndex4, (short) sharedPreferences.getInt(AudioEffectUtil.EQUALIZER_LEVEL_4, 0));
+
             // Equalizer Bar 1
             View sliderControl = inflater.inflate(R.layout.seek_bar_control, control, false);
             control.addView(sliderControl);
@@ -67,7 +68,6 @@ public class EqualizerControlFragment extends Fragment {
             TextView lowerBound = (TextView) sliderControl.findViewById(R.id.seek_bar_lower_bound);
             TextView upperBound = (TextView) sliderControl.findViewById(R.id.seek_bar_upper_bound);
             bandName.setText("Frequency Band 1 = " + ((eq.getCenterFreq(eqIndex1)) / 1000) + "Hz");
-            //subtitle.setText("is currently ");
             lowerBound.setText((lowerBandRange / 100) + "dB");
             upperBound.setText((upperBandRange / 100) + "dB");
             eqBar1.setMax(maxEqualizerLevel);
@@ -88,8 +88,6 @@ public class EqualizerControlFragment extends Fragment {
                 }
 
             });
-            //eqBar1.setProgress(sharedPreferences.getInt(AudioAttributes));
-
 
             // Equalizer Bar 2
             View sliderControl2 = inflater.inflate(R.layout.seek_bar_control, control, false);
@@ -99,8 +97,6 @@ public class EqualizerControlFragment extends Fragment {
             TextView lowerBound2 = (TextView) sliderControl2.findViewById(R.id.seek_bar_lower_bound);
             TextView upperBound2 = (TextView) sliderControl2.findViewById(R.id.seek_bar_upper_bound);
             bandName2.setText("Frequency Band 2 = " + ((eq.getCenterFreq(eqIndex2)) / 1000) + "Hz");
-            eqBar2.setMax(12);
-            //subtitle.setText("is currently ");
             lowerBound2.setText((lowerBandRange / 100) + "dB");
             upperBound2.setText((upperBandRange / 100) + "dB");
             eqBar2.setMax(maxEqualizerLevel);
@@ -129,8 +125,6 @@ public class EqualizerControlFragment extends Fragment {
             TextView lowerBound3 = (TextView) sliderControl3.findViewById(R.id.seek_bar_lower_bound);
             TextView upperBound3 = (TextView) sliderControl3.findViewById(R.id.seek_bar_upper_bound);
             bandName3.setText("Frequency Band 3 = " + ((eq.getCenterFreq(eqIndex3)) / 1000) + "Hz");
-            eqBar3.setMax(12);
-            //subtitle.setText("is currently ");
             lowerBound3.setText((lowerBandRange / 100) + "dB");
             upperBound3.setText((upperBandRange / 100) + "dB");
             eqBar3.setMax(maxEqualizerLevel);
@@ -160,8 +154,6 @@ public class EqualizerControlFragment extends Fragment {
             TextView lowerBound4 = (TextView) sliderControl4.findViewById(R.id.seek_bar_lower_bound);
             TextView upperBound4 = (TextView) sliderControl4.findViewById(R.id.seek_bar_upper_bound);
             bandName4.setText("Frequency Band 4 = " + ((eq.getCenterFreq(eqIndex4)) / 1000) + "Hz");
-            eqBar4.setMax(12);
-            //subtitle.setText("is currently ");
             lowerBound4.setText((lowerBandRange / 100) + "dB");
             upperBound4.setText((upperBandRange / 100) + "dB");
             eqBar4.setMax(maxEqualizerLevel);
@@ -184,6 +176,23 @@ public class EqualizerControlFragment extends Fragment {
             });
         }
         return rootView;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(eqBar1 != null) {
+            int eqLevel1 = eq.getBandLevel((short)1);
+            int eqLevel2 = eq.getBandLevel((short)2);
+            int eqLevel3 = eq.getBandLevel((short)3);
+            int eqLevel4 = eq.getBandLevel((short)4);
+            // We are saving this on pause so we only save once instead of saving it every time
+            // it is changed which slows down the main thread and makes control look bad
+            sharedPreferences.edit().putInt(AudioEffectUtil.EQUALIZER_LEVEL_1, eqLevel1).apply();
+            sharedPreferences.edit().putInt(AudioEffectUtil.EQUALIZER_LEVEL_2, eqLevel2).apply();
+            sharedPreferences.edit().putInt(AudioEffectUtil.EQUALIZER_LEVEL_3, eqLevel3).apply();
+            sharedPreferences.edit().putInt(AudioEffectUtil.EQUALIZER_LEVEL_4, eqLevel4).apply();
+        }
     }
 }
 

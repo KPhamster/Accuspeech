@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.media.audiofx.AudioEffect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,11 +46,11 @@ public class GainControlFragment extends Fragment {
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
                     switch (checkedId) {
                         case R.id.gainControlOn:
-                            sharedPreferences.edit().putBoolean(AudioEffectUtil.AUTO_GAIN_CONTROL_KEY, true).commit();
+                            sharedPreferences.edit().putBoolean(AudioEffectUtil.AUTO_GAIN_CONTROL_KEY, true).apply();
                             subtitle.setText("is currently On");
                             break;
                         case R.id.gainControlOff:
-                            sharedPreferences.edit().putBoolean(AudioEffectUtil.AUTO_GAIN_CONTROL_KEY, false).commit();
+                            sharedPreferences.edit().putBoolean(AudioEffectUtil.AUTO_GAIN_CONTROL_KEY, false).apply();
                             subtitle.setText("is currently Off");
                             break;
                     }

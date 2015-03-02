@@ -6,16 +6,9 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
-import edu.uci.accuspeech.fragment.PastRecordingsListFragment;
 import edu.uci.accuspeech.service.AudioService;
-import edu.uci.accuspeech.service.RecordService;
-import edu.uci.accuspeech.util.ConvertRawToWav;
+
 
 public class RenameActivity extends Activity{
     private String fileName;

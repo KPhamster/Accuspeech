@@ -1,9 +1,6 @@
 package edu.uci.accuspeech;
 
 import android.os.Bundle;
-import android.os.Debug;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.v4.app.FragmentTransaction;
 
 import edu.uci.accuspeech.fragment.BassBoostControlFragment;
@@ -26,7 +23,7 @@ public class MainActivity extends NavigationActivity {
             tx.add(R.id.container, new GainControlFragment());
             tx.add(R.id.container, new NoiseSuppressionFragment());
             tx.add(R.id.container, new BassBoostControlFragment());
-            tx.add(R.id.container, new EqualizerControlFragment());
+            //tx.add(R.id.container, new EqualizerControlFragment());
             tx.add(R.id.container, new DecibelMeterFragment());
             tx.commit();
         }

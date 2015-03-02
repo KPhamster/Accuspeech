@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.media.audiofx.AudioEffect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +12,12 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.media.audiofx.BassBoost;
 
 import edu.uci.accuspeech.R;
 import edu.uci.accuspeech.util.AudioEffectUtil;
 
 public class BassBoostControlFragment extends Fragment {
 
-    BassBoost bb = new BassBoost(0,0);
     SeekBar bassBar;
     int bassLevel;
     public SharedPreferences sharedPreferences;
@@ -47,7 +44,7 @@ public class BassBoostControlFragment extends Fragment {
             bassBoostDefault.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    sharedPreferences.edit().putBoolean(AudioEffectUtil.BASS_BOOST_DEFAULT_ENABLED, isChecked).commit();
+                    sharedPreferences.edit().putBoolean(AudioEffectUtil.BASS_BOOST_DEFAULT_ENABLED, isChecked).apply();
                     bassBar.setEnabled(!isChecked);
                 }
             });
@@ -87,9 +84,9 @@ public class BassBoostControlFragment extends Fragment {
         super.onPause();
         if(bassBar != null) {
             bassLevel = bassBar.getProgress();
-            // We are saving this on pause so we only save once instead of saving it everytime
+            // We are saving this on pause so we only save once instead of saving it every time
             // it is changed which slows down the main thread and makes control look bad
-            sharedPreferences.edit().putInt(AudioEffectUtil.BASS_STRENGTH, bassLevel).commit();
+            sharedPreferences.edit().putInt(AudioEffectUtil.BASS_STRENGTH, bassLevel).apply();
         }
     }
 }

@@ -1,5 +1,7 @@
 package edu.uci.accuspeech;
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 
@@ -26,6 +28,10 @@ public class MainActivity extends NavigationActivity {
             //tx.add(R.id.container, new EqualizerControlFragment());
             tx.add(R.id.container, new DecibelMeterFragment());
             tx.commit();
+        }
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Intent intent = new Intent(this, VersionWarningActivity.class);
+            startActivity(intent);
         }
     }
 }

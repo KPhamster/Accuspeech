@@ -76,7 +76,6 @@ public class EqualizerControlFragment extends Fragment {
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                     eq.setBandLevel(eqIndex1, (short) (progress + lowerBandRange));
                     bandName.setText("Frequency Band 1 = " + (progress + lowerBandRange) + "Hz");
-
                 }
 
                 public void onStartTrackingTouch(SeekBar seekBar) {

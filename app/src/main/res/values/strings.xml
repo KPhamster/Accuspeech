@@ -37,4 +37,9 @@
     <string name="stop">Stop</string>
     <string name="audio_in_use">Mic currently in use</string>
     <string name="saving_file">Saving audio file...</string>
+    <string name="warning">WARNING!</string>
+    <string name="ok">OK</string>
+    <string name="version_warning">This app is not compatible with the version of Android you have."\n\n"You will be unable to use this app to playback your recordings.</string>
+    <string name="sorry">Sorry!</string>
+    <string name="unable_to_play">You are unable to playback your recordings in this media player."\n\n"You can access your recordings directly from your SD card.</string>
 </resources>

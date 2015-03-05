@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -70,6 +71,11 @@ public class PastRecordingsActivity extends NavigationActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PastRecordingsListFragment())
                     .commit();
+        }
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Intent intent = new Intent(this, UnableToPlayWarningActivity.class);
+            startActivity(intent);
         }
     }
 

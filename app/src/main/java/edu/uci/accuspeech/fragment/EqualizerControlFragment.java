@@ -8,6 +8,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.media.audiofx.Equalizer;
@@ -37,6 +39,20 @@ public class EqualizerControlFragment extends Fragment {
             notSupportedText.setVisibility(View.VISIBLE);
             control.setVisibility(View.GONE);
         } else {
+            //Checks to see if the user wants to use device's default
+            final CheckBox equalizerDefault = (CheckBox) rootView.findViewById(R.id.equalizerDefault);
+            boolean isChecked = sharedPreferences.getBoolean(AudioEffectUtil.EQUALIZER_DEFAULT_ENABLED, false);
+            equalizerDefault.setChecked(isChecked);
+            equalizerDefault.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    sharedPreferences.edit().putBoolean(AudioEffectUtil.EQUALIZER_DEFAULT_ENABLED, isChecked).apply();
+                    eqBar1.setEnabled(!isChecked);
+                    eqBar2.setEnabled(!isChecked);
+                    eqBar3.setEnabled(!isChecked);
+                    eqBar4.setEnabled(!isChecked);
+                }
+            });
             // do this for as many sliders are needed
             /* Note: Each equalizer bar represents the "frequency band", which filters
                the audio signal falling within their specific frequency range.

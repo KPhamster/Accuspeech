@@ -61,21 +61,24 @@ public class EqualizerControlFragment extends Fragment {
             eq.setBandLevel(eqIndex4, (short) sharedPreferences.getInt(AudioEffectUtil.EQUALIZER_LEVEL_4, 0));
 
             // Equalizer Bar 1
-            View sliderControl = inflater.inflate(R.layout.seek_bar_control, control, false);
+            View sliderControl = inflater.inflate(R.layout.equalizer_seek_bar, control, false);
             control.addView(sliderControl);
             eqBar1 = (SeekBar)sliderControl.findViewById(R.id.seek_bar);
             final TextView bandName = (TextView) sliderControl.findViewById(R.id.seek_bar_name);
+            final TextView currentLevel = (TextView) sliderControl.findViewById(R.id.seek_bar_name2);
             TextView lowerBound = (TextView) sliderControl.findViewById(R.id.seek_bar_lower_bound);
             TextView upperBound = (TextView) sliderControl.findViewById(R.id.seek_bar_upper_bound);
             bandName.setText("Frequency Band 1 = " + ((eq.getCenterFreq(eqIndex1)) / 1000) + "Hz");
-            lowerBound.setText((lowerBandRange / 100) + "dB");
-            upperBound.setText((upperBandRange / 100) + "dB");
+            currentLevel.setText("Current Level = " + eq.getBandLevel(eqIndex1));
+            lowerBound.setText((lowerBandRange) + "dB");
+            upperBound.setText((upperBandRange) + "dB");
             eqBar1.setMax(maxEqualizerLevel);
             eqBar1.setProgress(eq.getBandLevel(eqIndex1));
             eqBar1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                     eq.setBandLevel(eqIndex1, (short) (progress + lowerBandRange));
-                    bandName.setText("Frequency Band 1 = " + (progress + lowerBandRange) + "Hz");
+                    currentLevel.setText("Current Level = " + (progress + lowerBandRange) + "dB");
+                    System.out.println(eq.getBandLevel(eqIndex1));
                 }
 
                 public void onStartTrackingTouch(SeekBar seekBar) {
@@ -89,22 +92,23 @@ public class EqualizerControlFragment extends Fragment {
             });
 
             // Equalizer Bar 2
-            View sliderControl2 = inflater.inflate(R.layout.seek_bar_control, control, false);
+            View sliderControl2 = inflater.inflate(R.layout.equalizer_seek_bar, control, false);
             control.addView(sliderControl2);
             eqBar2 = (SeekBar)sliderControl2.findViewById(R.id.seek_bar);
             final TextView bandName2 = (TextView) sliderControl2.findViewById(R.id.seek_bar_name);
+            final TextView currentLevel2 = (TextView) sliderControl2.findViewById(R.id.seek_bar_name2);
             TextView lowerBound2 = (TextView) sliderControl2.findViewById(R.id.seek_bar_lower_bound);
             TextView upperBound2 = (TextView) sliderControl2.findViewById(R.id.seek_bar_upper_bound);
             bandName2.setText("Frequency Band 2 = " + ((eq.getCenterFreq(eqIndex2)) / 1000) + "Hz");
-            lowerBound2.setText((lowerBandRange / 100) + "dB");
-            upperBound2.setText((upperBandRange / 100) + "dB");
+            currentLevel2.setText("Current Level = " + eq.getBandLevel(eqIndex2));
+            lowerBound2.setText((lowerBandRange) + "dB");
+            upperBound2.setText((upperBandRange) + "dB");
             eqBar2.setMax(maxEqualizerLevel);
             eqBar2.setProgress(eq.getBandLevel(eqIndex2));
             eqBar2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                     eq.setBandLevel(eqIndex2, (short) (progress + lowerBandRange));
-                    bandName2.setText("Frequency Band 2 = " + (progress + lowerBandRange) + "Hz");
-
+                    currentLevel2.setText("Current Level = " + (progress + lowerBandRange) + "dB");
                 }
 
                 public void onStartTrackingTouch(SeekBar seekBar) {
@@ -117,22 +121,23 @@ public class EqualizerControlFragment extends Fragment {
 
             });
             // Equalizer Bar 3
-            View sliderControl3 = inflater.inflate(R.layout.seek_bar_control, control, false);
+            View sliderControl3 = inflater.inflate(R.layout.equalizer_seek_bar, control, false);
             control.addView(sliderControl3);
             eqBar3 = (SeekBar)sliderControl3.findViewById(R.id.seek_bar);
             final TextView bandName3 = (TextView) sliderControl3.findViewById(R.id.seek_bar_name);
+            final TextView currentLevel3 = (TextView) sliderControl3.findViewById(R.id.seek_bar_name2);
             TextView lowerBound3 = (TextView) sliderControl3.findViewById(R.id.seek_bar_lower_bound);
             TextView upperBound3 = (TextView) sliderControl3.findViewById(R.id.seek_bar_upper_bound);
             bandName3.setText("Frequency Band 3 = " + ((eq.getCenterFreq(eqIndex3)) / 1000) + "Hz");
-            lowerBound3.setText((lowerBandRange / 100) + "dB");
-            upperBound3.setText((upperBandRange / 100) + "dB");
+            currentLevel3.setText("Current Level = " + eq.getBandLevel(eqIndex3));
+            lowerBound3.setText((lowerBandRange) + "dB");
+            upperBound3.setText((upperBandRange) + "dB");
             eqBar3.setMax(maxEqualizerLevel);
             eqBar3.setProgress(eq.getBandLevel(eqIndex3));
             eqBar3.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                     eq.setBandLevel(eqIndex3, (short) (progress + lowerBandRange));
-                    bandName3.setText("Frequency Band 3 = " + (progress + lowerBandRange) + "Hz");
-
+                    currentLevel3.setText("Current Level = " + (progress + lowerBandRange) + "dB");
                 }
 
                 public void onStartTrackingTouch(SeekBar seekBar) {
@@ -146,22 +151,23 @@ public class EqualizerControlFragment extends Fragment {
             });
 
             // Equalizer Bar 4
-            View sliderControl4 = inflater.inflate(R.layout.seek_bar_control, control, false);
+            View sliderControl4 = inflater.inflate(R.layout.equalizer_seek_bar, control, false);
             control.addView(sliderControl4);
             eqBar4 = (SeekBar)sliderControl4.findViewById(R.id.seek_bar);
             final TextView bandName4 = (TextView) sliderControl4.findViewById(R.id.seek_bar_name);
+            final TextView currentLevel4 = (TextView) sliderControl4.findViewById(R.id.seek_bar_name2);
             TextView lowerBound4 = (TextView) sliderControl4.findViewById(R.id.seek_bar_lower_bound);
             TextView upperBound4 = (TextView) sliderControl4.findViewById(R.id.seek_bar_upper_bound);
             bandName4.setText("Frequency Band 4 = " + ((eq.getCenterFreq(eqIndex4)) / 1000) + "Hz");
-            lowerBound4.setText((lowerBandRange / 100) + "dB");
-            upperBound4.setText((upperBandRange / 100) + "dB");
+            currentLevel4.setText("Current Level = " + eq.getBandLevel(eqIndex4));
+            lowerBound4.setText((lowerBandRange) + "dB");
+            upperBound4.setText((upperBandRange) + "dB");
             eqBar4.setMax(maxEqualizerLevel);
             eqBar4.setProgress(eq.getBandLevel(eqIndex4));
             eqBar4.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                     eq.setBandLevel(eqIndex4, (short) (progress + lowerBandRange));
-                    bandName4.setText("Frequency Band 4 = " + (progress + lowerBandRange) + "Hz");
-
+                    currentLevel4.setText("Current Level = " + (progress + lowerBandRange) + "dB");
                 }
 
                 public void onStartTrackingTouch(SeekBar seekBar) {
@@ -191,6 +197,10 @@ public class EqualizerControlFragment extends Fragment {
             sharedPreferences.edit().putInt(AudioEffectUtil.EQUALIZER_LEVEL_2, eqLevel2).apply();
             sharedPreferences.edit().putInt(AudioEffectUtil.EQUALIZER_LEVEL_3, eqLevel3).apply();
             sharedPreferences.edit().putInt(AudioEffectUtil.EQUALIZER_LEVEL_4, eqLevel4).apply();
+            System.out.println("Equalizer Level 1: " + eq.getBandLevel((short)1));
+            System.out.println("Equalizer Level 2: " + eq.getBandLevel((short)2));
+            System.out.println("Equalizer Level 3: " + eq.getBandLevel((short)3));
+            System.out.println("Equalizer Level 4: " + eq.getBandLevel((short)4));
         }
     }
 }

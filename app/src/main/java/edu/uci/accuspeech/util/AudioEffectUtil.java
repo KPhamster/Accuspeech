@@ -15,6 +15,7 @@ public class AudioEffectUtil {
     public static final String EQUALIZER_LEVEL_2 = "EQUALIZER_LEVEL_2";
     public static final String EQUALIZER_LEVEL_3 = "EQUALIZER_LEVEL_3";
     public static final String EQUALIZER_LEVEL_4 = "EQUALIZER_LEVEL_4";
+    //public static final String EQUALIZER_LEVEL_5 = "EQUALIZER_LEVEL_5";
 
     /**
      *  Supporter method for checking if audio effect works

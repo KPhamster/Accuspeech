@@ -25,7 +25,7 @@ public class MainActivity extends NavigationActivity {
             tx.add(R.id.container, new GainControlFragment());
             tx.add(R.id.container, new NoiseSuppressionFragment());
             tx.add(R.id.container, new BassBoostControlFragment());
-            //tx.add(R.id.container, new EqualizerControlFragment());
+            tx.add(R.id.container, new EqualizerControlFragment());
             tx.add(R.id.container, new DecibelMeterFragment());
             tx.commit();
         }

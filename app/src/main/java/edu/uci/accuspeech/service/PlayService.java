@@ -115,21 +115,23 @@ public class PlayService extends AudioService {
                 BassBoost bass = new BassBoost(0, sessionId);
                 if(bass.getStrengthSupported()) {
                     bass.setStrength((short) sharedPreferences.getInt(AudioEffectUtil.BASS_STRENGTH, 0));
-                }
+            }
                 else{
                     Toast.makeText(this, "Bass Boost Setting Strength Not Supported", Toast.LENGTH_SHORT).show();
                 }
             }
         }
-//        if (AudioEffectUtil.isSupported(AudioEffect.EFFECT_TYPE_EQUALIZER)) {
-//            if (!sharedPreferences.getBoolean(AudioEffectUtil.EQUALIZER_DEFAULT_ENABLED, false)) {
-//                Equalizer equalizer = new Equalizer(0, sessionId);
-//                equalizer.setBandLevel((short) 1, (short) sharedPreferences.getInt(AudioEffectUtil.EQUALIZER_LEVEL_1, 0));
-//                equalizer.setBandLevel((short) 2, (short) sharedPreferences.getInt(AudioEffectUtil.EQUALIZER_LEVEL_2, 0));
-//                equalizer.setBandLevel((short) 3, (short) sharedPreferences.getInt(AudioEffectUtil.EQUALIZER_LEVEL_3, 0));
-//                equalizer.setBandLevel((short) 4, (short) sharedPreferences.getInt(AudioEffectUtil.EQUALIZER_LEVEL_4, 0));
-//            }
-//        }
+        if (AudioEffectUtil.isSupported(AudioEffect.EFFECT_TYPE_EQUALIZER)) {
+            if (!sharedPreferences.getBoolean(AudioEffectUtil.EQUALIZER_DEFAULT_ENABLED, false)) {
+                Equalizer equalizer = new Equalizer(0, sessionId);
+                equalizer.setEnabled(true);
+                equalizer.setBandLevel((short) 1, (short) sharedPreferences.getInt(AudioEffectUtil.EQUALIZER_LEVEL_1, 0));
+                equalizer.setBandLevel((short) 2, (short) sharedPreferences.getInt(AudioEffectUtil.EQUALIZER_LEVEL_2, 0));
+                equalizer.setBandLevel((short) 3, (short) sharedPreferences.getInt(AudioEffectUtil.EQUALIZER_LEVEL_3, 0));
+                equalizer.setBandLevel((short) 4, (short) sharedPreferences.getInt(AudioEffectUtil.EQUALIZER_LEVEL_4, 0));
+//                equalizer.setBandLevel((short) 5, (short) sharedPreferences.getInt(AudioEffectUtil.EQUALIZER_LEVEL_5, 0));
+            }
+        }
 
     }
 

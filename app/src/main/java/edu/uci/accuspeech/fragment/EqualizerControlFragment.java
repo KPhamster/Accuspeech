@@ -195,6 +195,10 @@ public class EqualizerControlFragment extends Fragment {
                 }
 
             });
+            eqBar1.setEnabled(!isChecked);
+            eqBar2.setEnabled(!isChecked);
+            eqBar3.setEnabled(!isChecked);
+            eqBar4.setEnabled(!isChecked);
         }
         return rootView;
     }
